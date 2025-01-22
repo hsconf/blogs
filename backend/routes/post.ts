@@ -34,7 +34,7 @@ postRouter.post("/", async (req, res) => {
 
         const id = decodedToken.id
 
-        const post = await client.query('INSERT INTO posts (message, media, author_id) VALUES ($1, $2, $3) RETURNING *', [message, media, id]);
+        const post = await client.query('INSERT INTO posts (message, media, author_id) VALUES ($1, $2, $3) RETURNING *', [message, media, id,]);
 
         res.json(post.rows[0]);
 
@@ -47,14 +47,14 @@ postRouter.post("/", async (req, res) => {
 postRouter.get("/", async (req, res) => {
     try {
         const posts = await client
-            .query('SELECT posts.id, posts.message, posts.media, users.name FROM posts INNER JOIN users ON posts.author_id = users.id');
+            .query('SELECT posts.id, posts.message, posts.media, posts.created_at, users.name FROM posts INNER JOIN users ON posts.author_id = users.id');
 
         if (posts.rows.length === 0) {
             res.status(404).json({success: false, message: "No posts found."});
             return;
         }
 
-        res.status(200).json(posts.rows);
+        res.status(200).json(posts.rows.reverse());
 
     } catch (e) {
         console.log(e)
@@ -63,7 +63,7 @@ postRouter.get("/", async (req, res) => {
     }
 })
 
-postRouter.put("/", async (req, res) => {
+postRouter.put("/:id", async (req, res) => {
     try {
         const {message, media} = req.body;
         const token: string | undefined = req.get("Authorization");
@@ -83,7 +83,7 @@ postRouter.put("/", async (req, res) => {
         const id = decodedToken.id
 
         const post = await client
-            .query('UPDATE posts SET message = $1, media = $2 WHERE posts.author_id = $3 RETURNING *', [message, media, id]);
+            .query('UPDATE posts SET message = $1, media = $2 WHERE posts.author_id = $3 AND posts.id = $4 RETURNING *', [message, media, id, req.params.id]);
 
         res.json(post.rows[0]);
 

@@ -62,14 +62,18 @@ userRouter.post("/login", async (req, res) => {
         const user = await client.query('SELECT * FROM users WHERE name = $1', [name]);
 
         if (user.rows.length === 0) {
-            res.status(401).json({success: false, message: "User not exists"});
+            res.status(401).json({success: false, message: {
+                user: 'User does not exist!'
+                }});
             return;
         }
 
         const checkPassword = await bcrypt.compare(password, user.rows[0].password);
 
         if (!checkPassword) {
-            res.status(401).json({success: false, message: "Password is incorrect"});
+            res.status(401).json({success: false, message: {
+                password: 'Wrong Password!'
+                }});
             return;
         }
 
@@ -109,7 +113,6 @@ userRouter.post("/logout", async (req, res) => {
         res.status(200).json({
             success: true,
             message: `Logout successfully`,
-            user: user.rows[0]
         })
     } catch (e) {
       res.status(500).json({success: false, message: "Server Error"});
