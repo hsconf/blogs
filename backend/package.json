@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.ts",
     "start": "node index.ts",
-    "build": "npm install"
+    "build": "npm install && npx tsc && git add ."
   },
   "keywords": [],
   "author": "",
