@@ -39,8 +39,9 @@ postRouter.post("/", async (req, res) => {
         res.json(post.rows[0]);
 
     } catch (e) {
-        console.log(e);
+        console.log(e)
         res.status(500).json({success: false, message: "Server Error"});
+        return;
     }
 });
 
@@ -88,6 +89,7 @@ postRouter.put("/:id", async (req, res) => {
         res.json(post.rows[0]);
 
     } catch (e) {
+        console.log(e)
         res.status(500).json({success: false, message: "Server Error"});
         return;
     }
@@ -120,6 +122,7 @@ postRouter.delete("/:id", async (req, res) => {
 
         res.json({ success: true, message: "Post deleted successfully" });
     } catch (e) {
+        console.log(e)
         res.status(500).json({success: false, message: "Server Error"});
         return;
     }

@@ -45,6 +45,7 @@ userRouter.post("/signup", async (req, res) => {
 
         res.status(201).json(userWithToken.rows[0]);
     } catch (e) {
+        console.log(e)
         res.status(500).json({success: false, message: "Server Error"});
         return;
     }
@@ -84,6 +85,7 @@ userRouter.post("/login", async (req, res) => {
         res.status(200).json(updatedUserToken.rows[0]);
 
     } catch (e) {
+        console.log(e)
         res.status(500).json({success: false, message: "Server Error"});
         return;
     }
@@ -115,7 +117,9 @@ userRouter.post("/logout", async (req, res) => {
             message: `Logout successfully`,
         })
     } catch (e) {
+        console.log(e)
       res.status(500).json({success: false, message: "Server Error"});
+        return;
     }
 })
 
