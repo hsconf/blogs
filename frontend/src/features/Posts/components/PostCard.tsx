@@ -19,7 +19,7 @@ const PostCard: React.FC<IProps> = ({post}) => {
     }
 
     return (
-        <div className="w-auto border-2 border-black rounded-lg p-2 hover:bg-gradient-to-br from-blue-300 via-pink-300 to-green-300 hover:scale-110 hover:z-50 transition-all duration-500">
+        <div className="w-auto border-2 border-black rounded-lg p-2 hover:bg-gradient-to-br from-blue-300 via-pink-300 to-green-300 transition-all duration-500">
             <div className="flex items-center justify-between border-b border-b-black mb-2">
                 <h6 className="font-medium">{post.name}</h6>
                 <span>{dayjs(post.created_at).format('YYYY.MM.DD HH:mm')}</span>
