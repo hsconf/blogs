@@ -13,7 +13,7 @@ const Posts = () => {
 
     return (
         <div className="xl: px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+            <div className="flex flex-wrap">
                 {posts.map((post) => (
                     <PostCard post={post} key={post.id} />
                 ))}
